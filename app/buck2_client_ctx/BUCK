@@ -64,6 +64,7 @@ rust_library(
         "//buck2/app/buck2_action_parallelism:buck2_action_parallelism",
         "//buck2/app/buck2_agent_interactive:buck2_agent_interactive",
         "//buck2/app/buck2_build_info:buck2_build_info",
+        "//buck2/app/buck2_bes:buck2_bes",
         "//buck2/app/buck2_cli_proto:buck2_cli_proto",
         "//buck2/app/buck2_common:buck2_common",
         "//buck2/app/buck2_core:buck2_core",

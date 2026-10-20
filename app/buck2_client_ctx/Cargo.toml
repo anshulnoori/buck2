@@ -15,6 +15,7 @@ blake3.workspace = true
 buck2_action_parallelism.workspace = true
 buck2_agent_interactive.workspace = true
 buck2_build_info.workspace = true
+buck2_bes.workspace = true
 buck2_cli_proto.workspace = true
 buck2_common.workspace = true
 buck2_core.workspace = true

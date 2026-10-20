@@ -179,6 +179,7 @@ export const sidebars: SidebarsConfig = {
             'users/build_observability/interactive_console',
             'users/build_observability/logging',
             'users/build_observability/build_report',
+            'users/build_observability/build_event_service',
             isInternal() ? 'users/build_observability/observability' : null,
             isInternal() ? 'users/build_observability/scuba' : null,
             isInternal() ? 'users/build_observability/derived_user_tables' : null,

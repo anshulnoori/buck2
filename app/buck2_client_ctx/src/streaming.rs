@@ -43,6 +43,7 @@ use crate::events_ctx::EventsCtx;
 use crate::exit_result::ExitResult;
 use crate::path_arg::PathArg;
 use crate::signal_handler::with_simple_sigint_handler;
+use crate::subscribers::bes::BesSubscriber;
 use crate::subscribers::build_graph_stats::BuildGraphStats;
 use crate::subscribers::build_id_writer::BuildIdWriter;
 use crate::subscribers::event_log::EventLog;
@@ -131,6 +132,9 @@ fn update_events_ctx<T: StreamingCommand>(
     }
     if let Some(build_graph_stats) = get_build_graph_stats(cmd, ctx) {
         subscribers.push(build_graph_stats)
+    }
+    if let Some(bes) = get_bes_subscriber(cmd, matches, ctx) {
+        subscribers.push(bes)
     }
     let representative_config_flags = if ctx.paths().is_ok() {
         matches.get_representative_config_flags()
@@ -350,6 +354,24 @@ fn get_event_log_subscriber<T: StreamingCommand>(
             .unwrap_or(DEFAULT_RETAINED_EVENT_LOGS),
     );
     Box::new(log)
+}
+
+/// Publishes builds and tests to a Build Event Service, if one is configured.
+fn get_bes_subscriber<T: StreamingCommand>(
+    cmd: &T,
+    matches: BuckArgMatches<'_>,
+    ctx: &ClientCommandContext,
+) -> Option<Box<dyn EventSubscriber>> {
+    if !matches!(T::COMMAND_NAME, "build" | "test") {
+        return None;
+    }
+    let config_overrides = cmd
+        .build_config_opts()
+        .config_overrides(matches, ctx.immediate_config, &ctx.working_dir)
+        .ok()?;
+    let args = cmd.sanitize_argv(ctx.argv.clone()).argv;
+    let subscriber = BesSubscriber::new(ctx, T::COMMAND_NAME, &config_overrides, args)?;
+    Some(Box::new(subscriber))
 }
 
 fn get_build_id_writer(
