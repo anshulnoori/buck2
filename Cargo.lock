@@ -1222,6 +1222,41 @@ dependencies = [
 ]
 
 [[package]]
+name = "buck2_bes"
+version = "0.1.0"
+dependencies = [
+ "buck2_bes_proto",
+ "buck2_cli_proto",
+ "buck2_common",
+ "buck2_data",
+ "buck2_error",
+ "buck2_event_observer",
+ "buck2_events",
+ "buck2_re_configuration",
+ "buck2_wrapper_common",
+ "dupe",
+ "futures 0.3.34",
+ "prost",
+ "prost-types",
+ "tokio",
+ "tokio-stream",
+ "tonic",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "buck2_bes_proto"
+version = "0.1.0"
+dependencies = [
+ "buck2_protoc_dev",
+ "prost",
+ "prost-types",
+ "tonic",
+ "tonic-prost",
+]
+
+[[package]]
 name = "buck2_build_api"
 version = "0.1.0"
 dependencies = [
@@ -1580,6 +1615,7 @@ dependencies = [
  "blake3",
  "buck2_action_parallelism",
  "buck2_agent_interactive",
+ "buck2_bes",
  "buck2_build_info",
  "buck2_cli_proto",
  "buck2_common",
