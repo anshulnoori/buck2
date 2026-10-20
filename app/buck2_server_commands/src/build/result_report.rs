@@ -250,6 +250,8 @@ impl<'a> ResultReporter<'a> {
             Vec::new()
         };
 
+        let failed = !result.errors.is_empty() || result.outputs.iter().any(|o| o.inner.is_err());
+
         match pattern_modifiers {
             Some(modifiers) => {
                 for modifier in modifiers.iter() {
@@ -265,6 +267,7 @@ impl<'a> ResultReporter<'a> {
                         target_rule_type_name: result.target_rule_type_name.clone(),
                         outputs: outputs.clone(),
                         configured_graph_size,
+                        failed,
                     });
                 }
             }
@@ -275,6 +278,7 @@ impl<'a> ResultReporter<'a> {
                 target_rule_type_name: result.target_rule_type_name.clone(),
                 outputs,
                 configured_graph_size,
+                failed,
             }),
         }
         Ok(())

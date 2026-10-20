@@ -653,6 +653,9 @@ message BuildTarget {
   // not skipped.
   optional uint64 configured_graph_size = 5;
   optional string target_rule_type_name = 6;
+  // Whether building this target failed, including because a dependency
+  // failed.
+  bool failed = 7;
 }
 
 message BuildResponse {
